@@ -6,13 +6,13 @@
 # from utils import remove_repeated_events
 # from event_detail_info import get_event_detailinfo
 from get_luma.get_data_luma import get_from_luma
-from get_eventbrite.get_data_eventbrite import get_from_brite
+from get_eventbrite.get_data_eventbrite import get_from_eventbrite
 
 
 def main():
     event_data = []
-    event_data.extend(get_from_luma())
-    # event_data.extend(get_from_brite())
+    # event_data.extend(get_from_luma())
+    event_data.extend(get_from_eventbrite())
 
     print(event_data)
 
