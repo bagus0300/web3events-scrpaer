@@ -56,4 +56,7 @@ def get_event_detailinfo (event):
     except Exception as e:
         print(f'error: {e}')
 
+    finally:
+        driver.quit()
+
     return event_detail_info

@@ -7,6 +7,7 @@
 # from event_detail_info import get_event_detailinfo
 from get_luma.get_data_luma import get_from_luma
 from get_eventbrite.get_data_eventbrite import get_from_eventbrite
+import requests
 
 
 def main():
@@ -15,6 +16,14 @@ def main():
     event_data.extend(get_from_eventbrite())
 
     print(event_data)
+    print(len(event_data))
 
 if __name__ == "__main__":
     main()
+
+
+# url = ''
+# resp = requests.get(
+#     url=url
+# )
+# print(resp)

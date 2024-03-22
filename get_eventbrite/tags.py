@@ -1,7 +1,7 @@
 web3event_tags = [
-    "web3", "token", "blockchain", "crypto", "cryptocurrency", "smart contract", "nft",
+    "web3", "token", "blockchain", "crypto", "cryptocurrency", "nft",
     "dao", "defi", "dapp", "dex", "depin",
-    "staking", "mining", "liquidity", "gaming",
-    "erc20", "eth", "sol", "usdt", "degital asset",
-    "bitcoin", "ethereum", "solana", "polkadot", "polygon", "hackathon"
+    "gaming", "degital asset",
+    "bitcoin", "ethereum", "solana", "polkadot", "polygon", "hackathon",
+    "AI", "GenAI"
 ]

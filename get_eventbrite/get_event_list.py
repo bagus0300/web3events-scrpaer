@@ -12,34 +12,40 @@ from common.categories_list import web3_categories_list
 def get_event_list(url):
     url = url + "/?page="
     driver = start_driver_2()
-    event_list = []
-    is_end = False
-    page = 1
-    while not is_end:  
-        page_url = url + str(page)
-        driver.get(page_url)
-        delay = 10
-        time.sleep(delay)
-        dom = bs(driver.page_source, "html.parser")
-        try:
-            search_result_element = driver.find_element(By.CSS_SELECTOR, "ul.SearchResultPanelContentEventCardList-module__eventList___1YEh_")
-            is_search_result = search_result_element.is_displayed()
-            page += 1
-            event_elements = search_result_element.find_elements(By.TAG_NAME, "li")
-            for element in event_elements:
-                event = {}
-                event_card = element.find_element(By.CSS_SELECTOR, "div.discover-search-desktop-card")
-                event_detail = event_card.find_element(By.CSS_SELECTOR, "section.event-card-details")
-                title_element = event_detail.find_element(By.CSS_SELECTOR, "div.Stack_root__1ksk7>a")
-                event_url = title_element.get_attribute("href")
-                event_title = title_element.text
-                event["href"] = event_url
-                event["title"] = event_title
-                isIncluded = check_keywords_in_title(event['title'], web3_categories_list)
-                if(isIncluded):
+    try:
+        event_list = []
+        is_end = False
+        page = 1
+        while not is_end:  
+            page_url = url + str(page)
+            driver.get(page_url)
+            delay = 10
+            time.sleep(delay)
+            dom = bs(driver.page_source, "html.parser")
+            try:
+                search_result_element = driver.find_element(By.CSS_SELECTOR, "ul.SearchResultPanelContentEventCardList-module__eventList___1YEh_")
+                is_search_result = search_result_element.is_displayed()
+                page += 1
+                event_elements = search_result_element.find_elements(By.TAG_NAME, "li")
+                for element in event_elements:
+                    event = {}
+                    event_card = element.find_element(By.CSS_SELECTOR, "div.discover-search-desktop-card")
+                    event_detail = event_card.find_element(By.CSS_SELECTOR, "section.event-card-details")
+                    title_element = event_detail.find_element(By.CSS_SELECTOR, "div.Stack_root__1ksk7>a")
+                    event_url = title_element.get_attribute("href")
+                    event_title = title_element.text
+                    event["href"] = event_url
+                    event["title"] = event_title
+                    # isIncluded = check_keywords_in_title(event['title'], web3_categories_list)
+                    # if(isIncluded):
+                        # event_list.append(event)
                     event_list.append(event)
-        except NoSuchElementException:
-            is_search_result = False
-            is_end = True
+            except NoSuchElementException:
+                is_search_result = False
+                is_end = True
+
+    finally:
+        driver.quit()
+
 
     return event_list
