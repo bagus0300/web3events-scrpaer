@@ -51,6 +51,43 @@ def get_event_detailinfo (event):
         description_detail = description_element.find_element(By.CSS_SELECTOR, "#event-description")
         event_description = description_detail.get_attribute("innerHTML")
         event_detail_info["description"] = event_description
+
+        price_element = dom.find('div', attrs={'class': "conversion-bar__body"})
+        if price_element:
+            price = price_element.text
+            if price == "Sold Out":
+                ticket = "sold out"
+                isFree = False
+            elif price == "Donation":
+                ticket = "donation"
+                isFree = True
+            else:
+                ticket = ""
+                if price == "Free":
+                    isFree = True
+                else:
+                    isFree = False
+        else:
+            price_element = driver.find_element(By.CSS_SELECTOR, "div.ticket-card-compact-size__price>span")
+            if price_element:
+                price = price_element.text
+                if price == "Sold Out":
+                    ticket = "sold out"
+                    isFree = False
+                elif price == "Donation":
+                    ticket = "donation"
+                    isFree = True
+                else:
+                    ticket = ""
+                    if price == "Free":
+                        isFree = True
+                    else:
+                        isFree = False
+            else:
+                ticket = ""
+                isFree = False
+        event_detail_info["ticket"] = ticket
+        event_detail_info["isFree"] = isFree
         
 
     except Exception as e:

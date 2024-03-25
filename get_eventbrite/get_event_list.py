@@ -36,9 +36,6 @@ def get_event_list(url):
                     event_title = title_element.text
                     event["href"] = event_url
                     event["title"] = event_title
-                    # isIncluded = check_keywords_in_title(event['title'], web3_categories_list)
-                    # if(isIncluded):
-                        # event_list.append(event)
                     event_list.append(event)
             except NoSuchElementException:
                 is_search_result = False

@@ -20,11 +20,11 @@ def get_from_luma():
 
     city_event_href_values = [element.get_attribute('href') for element in city_event_elements]
     for city_href in city_event_href_values:
-        event_list_values.extend(get_event_list(city_href))
+        event_list_values.extend(get_event_list(city_href, 'city'))
     
     calendar_event_href_values = [element.get_attribute('href') for element in calendar_event_elements]
     for calendar_href in calendar_event_href_values:
-        event_list_values.extend(get_event_list(calendar_href))
+        event_list_values.extend(get_event_list(calendar_href, 'topic'))
 
     filtered_event_list = remove_repeated_events(event_list_values, "href")
     print("count:", len(filtered_event_list))

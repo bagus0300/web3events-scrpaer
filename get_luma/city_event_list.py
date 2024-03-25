@@ -9,18 +9,25 @@ from common.utils import check_keywords_in_title
 import time
 
 
-def get_event_list(href):
+def get_event_list(href, type):
     url = href
     driver = start_driver_2()
     driver.get(url)
     delay = 3
     time.sleep(delay)
     print("Page Loaded Completely")
-    # while driver.execute_script("return document.readyState") != "complete":
-    #      time.sleep(delay)
+
     data_list = []
     try:
-        # WebDriverWait(driver, 5).until( EC.visibility_of_element_located((By.CSS_SELECTOR, "div.timeline")) )
+        if type == "topic":
+            topic = driver.find_element(By.CSS_SELECTOR, 'div.jsx-212035885.flex-column.header h1')
+            is_topic = check_keywords_in_title(topic, web3_categories_list)
+            if is_topic:
+                is_web3 = True
+            else:
+                is_web3 = False
+        else:
+            is_web3 = False
         card_wrappers = WebDriverWait(driver, delay).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.card-wrapper')))
 
         for card_wrapper in card_wrappers:
@@ -36,9 +43,14 @@ def get_event_list(href):
                 pill_labels = card_wrapper.find_elements(By.CLASS_NAME, 'jsx-146954525.pill-label')
                 pill_label_texts = [label.text for label in pill_labels]
                 unit_data['tags'] = pill_label_texts
-                isIncluded = check_keywords_in_title(unit_data['title'], web3_categories_list)
-                if(isIncluded):
+
+                if is_web3:
                     data_list.append(unit_data)
+                else:
+                    isIncluded = check_keywords_in_title(unit_data['title'], web3_categories_list)
+                    if(isIncluded):
+                        data_list.append(unit_data)
+                    
             except NoSuchElementException:
                 print("Unalbe to locate elements in card-wrapper")
         # print("222", data_list)
